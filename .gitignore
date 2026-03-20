@@ -1,0 +1,39 @@
+# Environnement virtuel
+.venv/
+env/
+venv/
+
+# Django
+*.pyc
+__pycache__/
+media/
+
+# Variables d'environnement
+.env
+*.env
+
+# VS Code
+.vscode/
+
+# Python
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Tests
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+```
+
+---
