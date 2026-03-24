@@ -4,6 +4,9 @@ from django.contrib.auth import login
 from .forms import SignupForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from .forms import TicketForm
+from .models import Ticket
 
 def login_view(request):
     form = AuthenticationForm()
@@ -34,11 +37,27 @@ def signup_view(request):
 def logout_view(request):
     return HttpResponse('')
 
+@login_required
 def home_view(request):
-    return HttpResponse('')
+    tickets = Ticket.objects.filter(
+        user=request.user
+    ).order_by('-time_created')
+    
+    return render(request, 'home.html', {'tickets': tickets})
 
+@login_required
 def ticket_create_view(request):
-    return HttpResponse('')
+    form = TicketForm()
+
+    if request.method == 'POST':
+        form = TicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            return redirect('home')
+
+    return render(request, 'ticket_create.html', {'form': form})
 
 def ticket_edit_view(request):
     return HttpResponse('')
