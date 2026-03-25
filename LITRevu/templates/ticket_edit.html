@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Modifier le billet</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sauvegarder</button>
+        <a href="{% url 'my_post' %}">Annuler</a>
+    </form>
+
+{% endblock content %}

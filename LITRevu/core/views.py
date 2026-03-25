@@ -1,8 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from .forms import SignupForm
-from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import TicketForm
@@ -59,11 +58,28 @@ def ticket_create_view(request):
 
     return render(request, 'ticket_create.html', {'form': form})
 
-def ticket_edit_view(request):
-    return HttpResponse('')
+@login_required
+def ticket_edit_view(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    form = TicketForm(instance=ticket)
 
-def ticket_delete_view(request):
-    return HttpResponse('')
+    if request.method == 'POST':
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('my-post')
+
+    return render(request, 'ticket_edit.html', {'form': form})
+
+@login_required
+def ticket_delete_view(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('my_post')
+
+    return render(request, 'ticket_delete.html', {'ticket': ticket})
 
 def review_create_view(request):
     return HttpResponse('')
@@ -77,8 +93,13 @@ def review_delete_view(request):
 def review_answer_view(request):
     return HttpResponse('')
 
+@login_required
 def my_post_view(request):
-    return HttpResponse('')
+    tickets = Ticket.objects.filter(
+        user=request.user
+    ).order_by('-time_created')
+    
+    return render(request, 'my_post.html', {'tickets': tickets})
 
 def follow_view(request):
     return HttpResponse('')
