@@ -11,6 +11,10 @@
             <p>{{ ticket.description }}</p>
             <p>Posté par : {{ ticket.user.username }}</p>
             <p>{{ ticket.time_created }}</p>
+            {% if ticket.image %}
+            <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}">
+            {% endif %}
+            <a href="{% url 'review_answer' ticket.pk %}">Faire une critique</a>
         </div>
     {% empty %}
         <p>Aucun billet pour le moment !</p>

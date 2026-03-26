@@ -78,7 +78,7 @@ def ticket_delete_view(request, pk):
 
     if request.method == 'POST':
         ticket.delete()
-        return redirect('my_post')
+        return redirect('my_post_ticket')
 
     return render(request, 'ticket_delete.html', {'ticket': ticket})
 
@@ -129,8 +129,20 @@ def review_delete_view(request, pk):
     return render(request, 'review_delete.html', {'review': review})
 
 @login_required
-def review_answer_view(request):
-    return HttpResponse('')
+def review_answer_view(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect('home')
+
+    return render(request, 'review_answer.html', {'form': form, 'ticket': ticket})
 
 @login_required
 def my_post_ticket_view(request):

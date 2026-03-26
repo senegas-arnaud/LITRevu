@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +32,8 @@ urlpatterns = [
     path('review_create/', views.review_create_view, name='review_create'), 
     path('review_edit/<int:pk>/', views.review_edit_view, name='review_edit'),
     path('review_delete/<int:pk>/', views.review_delete_view, name='review_delete'), 
-    path('review_answer/', views.review_answer_view, name='review_answer'),
+    path('review_answer/<int:pk>/', views.review_answer_view, name='review_answer'),
     path('my_post_ticket/', views.my_post_ticket_view, name='my_post_ticket'),  
     path('my_post_review/', views.my_post_review_view, name='my_post_review'),  
     path('follow/', views.follow_view, name='follow'), 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
