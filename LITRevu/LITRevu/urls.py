@@ -28,9 +28,10 @@ urlpatterns = [
     path('ticket_edit/<int:pk>/', views.ticket_edit_view, name='ticket_edit'),
     path('ticket_delete/<int:pk>/', views.ticket_delete_view, name='ticket_delete'),
     path('review_create/', views.review_create_view, name='review_create'), 
-    path('review_edit/', views.review_edit_view, name='review_edit'),
-    path('review_delete/', views.review_delete_view, name='review_delete'), 
+    path('review_edit/<int:pk>/', views.review_edit_view, name='review_edit'),
+    path('review_delete/<int:pk>/', views.review_delete_view, name='review_delete'), 
     path('review_answer/', views.review_answer_view, name='review_answer'),
-    path('my_post/', views.my_post_view, name='my_post'),  
+    path('my_post_ticket/', views.my_post_ticket_view, name='my_post_ticket'),  
+    path('my_post_review/', views.my_post_review_view, name='my_post_review'),  
     path('follow/', views.follow_view, name='follow'), 
 ]

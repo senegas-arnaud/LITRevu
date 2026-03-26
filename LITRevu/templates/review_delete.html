@@ -3,12 +3,12 @@
 {% block content %}
 
     <h2>Supprimer le billet</h2>
-    <p>Voulez-vous vraiment supprimer "{{ ticket.title }}" ?</p>
+    <p>Voulez-vous vraiment supprimer "{{ review.headline }}" ?</p>
 
     <form method="post">
         {% csrf_token %}
         <button type="submit">Confirmer la suppression</button>
-        <a href="{% url 'my_post_ticket' %}">Annuler</a>
+        <a href="{% url 'my_post_review' %}">Annuler</a>
     </form>
 
 {% endblock content %}

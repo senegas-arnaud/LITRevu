@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <nav>
+        <a href="{% url 'my_post_ticket' %}">Mes billets</a>
+        <a href="{% url 'my_post_review' %}">Mes critiques</a> 
+    </nav>
 
     <h2>Mes billets</h2>
 

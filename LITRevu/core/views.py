@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from .forms import SignupForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import TicketForm
-from .models import Ticket
+from .forms import TicketForm, ReviewForm
+from .models import Ticket, Review
 
 def login_view(request):
     form = AuthenticationForm()
@@ -34,7 +34,8 @@ def signup_view(request):
 
 
 def logout_view(request):
-    return HttpResponse('')
+    logout(request)
+    return redirect('login')
 
 @login_required
 def home_view(request):
@@ -67,7 +68,7 @@ def ticket_edit_view(request, pk):
         form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             form.save()
-            return redirect('my-post')
+            return redirect('my_post_ticket')
 
     return render(request, 'ticket_edit.html', {'form': form})
 
@@ -81,25 +82,72 @@ def ticket_delete_view(request, pk):
 
     return render(request, 'ticket_delete.html', {'ticket': ticket})
 
+@login_required
 def review_create_view(request):
-    return HttpResponse('')
+    ticket_form = TicketForm()
+    review_form = ReviewForm()
 
-def review_edit_view(request):
-    return HttpResponse('')
+    if request.method == 'POST':
+        ticket_form = TicketForm(request.POST, request.FILES)
+        review_form = ReviewForm(request.POST)
 
-def review_delete_view(request):
-    return HttpResponse('')
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
 
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+
+            return redirect('home')
+
+    return render(request, 'review_create.html', {'ticket_form': ticket_form,'review_form': review_form })
+
+@login_required
+def review_edit_view(request,pk):
+    review = get_object_or_404(Review, pk=pk)
+    form = ReviewForm(instance=review)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('my_post_review')
+
+    return render(request, 'review_edit.html', {'form': form})
+
+@login_required
+def review_delete_view(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+
+    if request.method == 'POST':
+        review.delete()
+        return redirect('my_post_review')
+
+    return render(request, 'review_delete.html', {'review': review})
+
+@login_required
 def review_answer_view(request):
     return HttpResponse('')
 
 @login_required
-def my_post_view(request):
+def my_post_ticket_view(request):
     tickets = Ticket.objects.filter(
         user=request.user
     ).order_by('-time_created')
     
-    return render(request, 'my_post.html', {'tickets': tickets})
+    return render(request, 'my_post_ticket.html', {'tickets': tickets })
+
+@login_required
+def my_post_review_view(request):
+    reviews = Review.objects.filter(
+        user=request.user
+    ).order_by('-time_created')
+
+    return render(request, 'my_post_review.html', {'reviews': reviews})
+
 
 def follow_view(request):
     return HttpResponse('')

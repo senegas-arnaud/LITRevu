@@ -2,13 +2,13 @@
 
 {% block content %}
 
-    <h2>Modifier le billet</h2>
+    <h2>Modifier la critique</h2>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Sauvegarder</button>
-        <a href="{% url 'my_post_ticket' %}">Annuler</a>
+        <a href="{% url 'my_post_review' %}">Annuler</a>
     </form>
 
 {% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <nav>
+        <a href="{% url 'my_post_ticket' %}">Mes billets</a>
+        <a href="{% url 'my_post_review' %}">Mes critiques</a> 
+    </nav>
+
+    {% for review in reviews %}
+        <div>
+            <h3>{{ review.headline }}</h3>
+            <p>Note : {{ review.rating }}</p>
+            <p>{{ review.body }}</p>
+            <p>{{ review.time_created }}</p>
+
+            <p>Billet lié : {{ review.ticket.title }}</p>      
+            <p>Auteur de l'oeuvre : {{ review.ticket.author }}</p>
+            <a href="{% url 'review_edit' review.pk %}">Modifier</a>
+            <a href="{% url 'review_delete' review.pk %}">Supprimer</a>
+        </div>
+
+    {% empty %}
+        <p>Aucune critique pour le moment !</p>
+    {% endfor %}
+
+{% endblock content %}
