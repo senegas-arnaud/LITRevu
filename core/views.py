@@ -1,11 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout
-from .forms import SignupForm
+from django.contrib.auth import login, logout, get_user_model
+from .forms import SignupForm, LoginForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import TicketForm, ReviewForm
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
+from django.contrib import messages
+from itertools import chain
+from django.db.models import CharField, Value
 
 def login_view(request):
     form = AuthenticationForm()
@@ -39,10 +42,16 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-    tickets = Ticket.objects.filter(
+    followed_users = UserFollows.objects.filter(
         user=request.user
+    ).values_list('followed_user', flat=True)
+
+    all_users = list(followed_users) + [request.user.pk]
+
+    tickets = Ticket.objects.filter(
+        user__in=all_users
     ).order_by('-time_created')
-    
+
     return render(request, 'home.html', {'tickets': tickets})
 
 @login_required
@@ -161,5 +170,44 @@ def my_post_review_view(request):
     return render(request, 'my_post_review.html', {'reviews': reviews})
 
 
+User = get_user_model()
+
+@login_required
 def follow_view(request):
-    return HttpResponse('')
+    following = UserFollows.objects.filter(user=request.user)
+    
+    if request.method == 'POST':
+        unfollow_pk = request.POST.get('unfollow')
+        if unfollow_pk:
+            UserFollows.objects.filter(
+                user=request.user,
+                followed_user=unfollow_pk
+            ).delete()
+            return redirect('follow')
+
+        username = request.POST.get('username')
+        if username:
+            try:
+                user_to_follow = User.objects.get(username=username)
+                if user_to_follow == request.user:
+                    messages.error(request, 'Vous ne pouvez pas vous suivre vous même !')
+                else:
+                    UserFollows.objects.get_or_create(
+                        user=request.user,
+                        followed_user=user_to_follow
+                    )
+                    messages.success(request, f'Vous suivez maintenant {username} !')
+            except User.DoesNotExist:
+                messages.error(request, f"L'utilisateur {username} n'existe pas !")
+
+    return render(request, 'follow.html', {'following': following})
+
+@login_required
+def ticket_reviews_view(request, pk):
+    ticket = get_object_or_404(Ticket, pk=pk)
+    reviews = Review.objects.filter(ticket=ticket).order_by('-time_created')
+
+    return render(request, 'ticket_reviews.html', {
+        'ticket': ticket,
+        'reviews': reviews
+    })

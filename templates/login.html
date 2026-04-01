@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITRevu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="shader-bg"></canvas>
+    <header>
+        <div class ="auth-header">
+            <h1>LITRevu</h1>
+            <img src="{% static 'images/LITRevulogo.png' %}" alt="Home" class="auth-icon">
+        </div>
+    </header>
+
+    <main class="auth-content">
+        <h2 class="auth-title">Connexion</h2>
+
+        <form class ="auth-form" method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <button class="auth-button" type="submit">Se connecter</button>
+        </form>
+
+        <p>Pas encore de compte ? <a href="{% url 'signup' %}">S'inscrire</a></p>
+    </main>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

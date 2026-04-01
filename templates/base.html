@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITRevu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <canvas id="shader-bg"></canvas>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="navbar-brand">LITRevu</a>
+        <div class="navbar-links">
+            <a href="{% url 'home' %}" class="nav-link">
+                <img src="{% static 'images/Home.png' %}" alt="Home" class="nav-icon">
+                <span class="nav-name">Flux</span>
+            </a>
+            <a href="{% url 'ticket_create' %}" class="nav-link">
+                <img src="{% static 'images/Ticket.png' %}" alt="Créer un billet" class="nav-icon">
+                <span class="nav-name">Créer un billet</span>
+            </a>
+            <a href="{% url 'review_create' %}" class="nav-link">
+                <img src="{% static 'images/Review.png' %}" alt="Créer une critique" class="nav-icon">
+                <span class="nav-name">Créer une critique</span>
+            </a>
+            <a href="{% url 'my_post_ticket' %}" class="nav-link">
+                <img src="{% static 'images/My_post.png' %}" alt="Mes posts" class="nav-icon">
+                <span class="nav-name">Mes posts</span>
+            </a>
+            <a href="{% url 'follow' %}" class="nav-link">
+                <img src="{% static 'images/Follow.png' %}" alt="Abonnements" class="nav-icon">
+                <span class="nav-name">Abonnements</span>
+            </a>
+            <a href="{% url 'logout' %}" class="nav-link nav-logout">
+                <img src="{% static 'images/logout.png' %}" alt="Déconnexion" class="nav-icon">
+                <span class="nav-name">Déconnexion</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

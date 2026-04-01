@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Abonnements</h2>
+
+    <h3>Suivre un utilisateur</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Nom d'utilisateur">
+        <button type="submit">Suivre</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h3>Utilisateurs suivis</h3>
+    {% for follow in following %}
+        <div>
+            <p>{{ follow.followed_user.username }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="unfollow" value="{{ follow.followed_user.pk }}">
+                <button type="submit">Se désabonner</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Vous ne suivez personne pour le moment !</p>
+    {% endfor %}
+
+{% endblock content %}
