@@ -94,3 +94,17 @@ function render() {
 }
 
 render();
+
+
+document.querySelectorAll('.toggle-reviews').forEach(button => {
+    button.addEventListener('click', () => {
+        const ticketId = button.dataset.ticketId;
+        const reviewsDiv = document.getElementById(`reviews-${ticketId}`);
+        
+        reviewsDiv.classList.toggle('visible');
+        
+        button.textContent = reviewsDiv.classList.contains('visible')
+            ? 'Masquer les avis'
+            : 'Voir les avis';
+    });
+});

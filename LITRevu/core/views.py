@@ -8,7 +8,7 @@ from .forms import TicketForm, ReviewForm
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from itertools import chain
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, Avg
 
 def login_view(request):
     form = AuthenticationForm()
@@ -50,6 +50,8 @@ def home_view(request):
 
     tickets = Ticket.objects.filter(
         user__in=all_users
+    ).annotate(
+        avg_rating=Avg('reviews__rating')
     ).order_by('-time_created')
 
     return render(request, 'home.html', {'tickets': tickets})

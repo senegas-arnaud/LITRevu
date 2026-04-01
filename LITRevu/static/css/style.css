@@ -123,7 +123,7 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgb(255, 255, 255);
     border-radius: 12px;
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
@@ -274,10 +274,12 @@ ul.errorlist {
 }
 
 .home-title {
-    width: 100%;
     height: 40px;
     border-radius: 10px;
-    margin:  20px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom:  20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -285,7 +287,7 @@ ul.errorlist {
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgb(255, 255, 255);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     color: #232526;
 }
 
@@ -293,25 +295,63 @@ ul.errorlist {
     display: flex;
     padding: 20px;
     gap: 5px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px 10px 10px 10px;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     justify-content:space-evenly;
+    text-decoration: none;
     color: #232526;
+    font-family: 'Raleway', sans-serif;
 }
 
 .info {
     display: flex;
     flex-direction: column;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    color: #232526;
+    gap: 8px;             
+    flex: 1;               
+    padding: 15px;
+}
+
+.title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.6rem;
+    color: #232526;
+}
+
+.home-username, .review-username{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color:rgb(146, 141, 141);
+    font-style: italic;
+    font-weight: 400;
+    margin-left: 10px;
+}
+.home-description, .review-description{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color: #232526;
+    margin-left: 10px;
 }
 
 .review-button {
     display: flex;
     flex-direction: column;
     gap:20px;
+    
+}
+
+.links-review, .view-review{
+    text-decoration: none;
+    color: #232526;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .answer-review, .view-review{
@@ -327,8 +367,6 @@ ul.errorlist {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    color: #232526;
 }
 
 .answer-review:hover, .view-review:hover{
@@ -338,4 +376,79 @@ ul.errorlist {
     box-shadow: 0 8px 32px rgb(255, 255, 255);
     animation: shake 1.8s infinite;
     scale: 1.2;
+}
+
+.ticket-img {
+    width: 120px;
+    height: 160px; 
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;  
+    margin-right: 40px;
+}
+
+.cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.star-img{
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.rating, .review-rate{
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+    gap: 5px;
+}
+.review-rate {
+    color: #232526;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.home-content:has(+ .reviews-container:not(.hidden)) {
+    border-radius: 10px 10px 0 0; 
+    border-bottom: none; 
+    margin-bottom: 0;  
+    box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.1);      
+}
+
+.reviews-container.visible {
+    max-height: 1000px; 
+    padding: 10px;
+}
+
+
+.reviews-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0;
+    margin: 0;
+    gap:10px;
+    border-radius: 0 0 10px 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+
+.review-card {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }

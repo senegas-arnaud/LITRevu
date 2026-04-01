@@ -36,5 +36,4 @@ urlpatterns = [
     path('my_post_ticket/', views.my_post_ticket_view, name='my_post_ticket'),  
     path('my_post_review/', views.my_post_review_view, name='my_post_review'),  
     path('follow/', views.follow_view, name='follow'), 
-    path('ticket_reviews/<int:pk>/', views.ticket_reviews_view, name='ticket_reviews'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
