@@ -8,7 +8,7 @@ from .forms import TicketForm, ReviewForm
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from itertools import chain
-from django.db.models import CharField, Value, Avg
+from django.db.models import CharField, Value, Avg, Count
 
 def login_view(request):
     form = AuthenticationForm()
@@ -178,6 +178,16 @@ User = get_user_model()
 def follow_view(request):
     following = UserFollows.objects.filter(user=request.user)
     
+    followed_id = following.values_list('followed_user', flat=True)
+
+    recommendations = User.objects.exclude(
+        id__in=followed_id
+    ).exclude(
+        id=request.user.pk
+    ).annotate(
+        post_count=Count('tickets')
+    ).order_by('-post_count')[:5]
+
     if request.method == 'POST':
         unfollow_pk = request.POST.get('unfollow')
         if unfollow_pk:
@@ -202,7 +212,7 @@ def follow_view(request):
             except User.DoesNotExist:
                 messages.error(request, f"L'utilisateur {username} n'existe pas !")
 
-    return render(request, 'follow.html', {'following': following})
+    return render(request, 'follow.html', {'following': following, 'recommendations' : recommendations})
 
 @login_required
 def ticket_reviews_view(request, pk):

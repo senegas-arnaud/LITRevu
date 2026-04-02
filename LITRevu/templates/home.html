@@ -12,7 +12,7 @@
                     {% load static %}
                     <div class="rating">
                         <p>{{ ticket.reviews.count }} Avis - {{ ticket.avg_rating|floatformat:1 }}</p>
-                        <img src="{% static 'images/Star2.png' %}" alt="Home" class="star-img">
+                        <img src="{% static 'images/Star.png' %}" alt="Home" class="star-img">
                     </div>
                 {% endif %}
                 <p class ="home-description">{{ ticket.description }}</p>
@@ -25,7 +25,7 @@
             </div>
             <div class="review-button">
                 <button class="answer-review">
-                    <a class ="links-review" href="{% url 'review_answer' ticket.pk %}">Faire un avis</a>
+                    <a class ="links-review" href="{% url 'review_answer' ticket.pk %}">Donner un avis</a>
                 </button>
                 <button class="view-review toggle-reviews" data-ticket-id="{{ ticket.pk }}">
                     Voir les avis
@@ -37,7 +37,7 @@
             <div class="review-card">
                 <div class="review-rate">
                     <h4>{{ review.headline }} - {{ review.rating }}</h4>
-                    <img src="{% static 'images/Star2.png' %}" alt="Home" class="star-img">
+                    <img src="{% static 'images/Star.png' %}" alt="Home" class="star-img">
                 </div>
                 <p class ="review-description">{{ review.body }}</p>
                 <p class ="review-username">{{ review.user.username }} - {{ review.time_created }}</p>

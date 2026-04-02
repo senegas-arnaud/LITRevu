@@ -452,3 +452,148 @@ ul.errorlist {
     margin-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+
+.abonnement {
+    display: flex;
+    justify-content:space-around;
+    width: 100%;
+    height: auto;
+    gap:20%;
+}
+
+.followunfollow{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.follow{
+    height: 150px;
+    margin: 10px;
+    border-radius:10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.follow-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap:5px;
+}
+
+.unfollow{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border-radius:10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.unfollow-form{
+    display: flex;
+    align-items: center;  
+    justify-content: space-between; 
+    width: 100%;
+}
+
+.unfollow-name{
+    flex: 1;            
+    text-align: center;
+}
+
+.title-unfollow, .title-follow, .title-recommendation {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    color: #232526;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius:10px 10px 0 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.button-follow{
+    margin-bottom: 20px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    margin: 0 auto; 
+    font-size:medium;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.button-unfollow, .button-recommendation {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    flex-shrink: 0; 
+    margin: 0 auto; 
+    font-size:small;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.button-unfollow{
+    color: #e74c3c;
+    margin-right: 10px;
+}
+
+.button-follow:hover, .button-unfollow:hover, .button-recommendation:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgb(255, 255, 255);
+    animation: shake 1.8s infinite;
+    scale: 1.2;
+}
+
+.recommendation{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    margin: 20px;
+    border-radius:10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card{
+    display: flex;
+    justify-content:space-evenly;
+    text-align: center;
+    align-items: center;
+    gap:10px;
+}
+
+.recommandation-number{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color:rgb(146, 141, 141);
+    font-style: italic;
+    font-weight: 400;
+}
