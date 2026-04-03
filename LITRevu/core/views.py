@@ -54,7 +54,11 @@ def home_view(request):
         avg_rating=Avg('reviews__rating')
     ).order_by('-time_created')
 
-    return render(request, 'home.html', {'tickets': tickets})
+    reviewed_tickets = Review.objects.filter(
+        user=request.user
+    ).values_list('ticket', flat=True)
+
+    return render(request, 'home.html', {'tickets': tickets, 'reviewed_tickets': reviewed_tickets })
 
 @login_required
 def ticket_create_view(request):
@@ -142,6 +146,16 @@ def review_delete_view(request, pk):
 @login_required
 def review_answer_view(request, pk):
     ticket = get_object_or_404(Ticket, pk=pk)
+
+    already_reviewed = Review.objects.filter(
+        ticket=ticket,
+        user=request.user
+    ).exists()
+
+    if already_reviewed:
+        messages.error(request, 'Vous avez déjà donné votre avis sur ce billet !')
+        return redirect('home')
+
     form = ReviewForm()
 
     if request.method == 'POST':
@@ -159,6 +173,8 @@ def review_answer_view(request, pk):
 def my_post_ticket_view(request):
     tickets = Ticket.objects.filter(
         user=request.user
+    ).annotate(
+        avg_rating=Avg('reviews__rating')
     ).order_by('-time_created')
     
     return render(request, 'my_post_ticket.html', {'tickets': tickets })
@@ -173,6 +189,15 @@ def my_post_review_view(request):
 
 
 User = get_user_model()
+
+@login_required
+def my_post_answer_view(request):
+    reviews = Review.objects.filter(
+        ticket__user = request.user
+    )
+
+    return render(request, 'my_post_answer.html', {'reviews': reviews})
+
 
 @login_required
 def follow_view(request):

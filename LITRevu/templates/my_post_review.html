@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <nav>
-        <a href="{% url 'my_post_ticket' %}">Mes billets</a>
-        <a href="{% url 'my_post_review' %}">Mes critiques</a> 
+    <h2 class="my-post-title">Mes publications</h2>
+    <nav class="my-post-nav">
+        <a href="{% url 'my_post_ticket' %}" class="post-nav">Billets</a>
+        <a href="{% url 'my_post_review' %}" class="post-nav">Avis</a> 
+        <a href="{% url 'my_post_answer' %}" class="post-nav">Réponses</a>
     </nav>
 
     {% for review in reviews %}

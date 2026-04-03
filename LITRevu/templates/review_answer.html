@@ -2,19 +2,34 @@
 
 {% block content %}
 
-    <h2>Créer une critique</h2>
-
-    <div>
-        <h3>Billet : {{ ticket.title }}</h3>
-        <p>Auteur de l'oeuvre : {{ ticket.author }}</p>
-        <p>{{ ticket.description }}</p>
+    <div class="answer-ticket">
+        <h3 class="answer-title">{{ ticket.title }} - {{ ticket.author }}</h3>
+        <p class="answer-description">{{ ticket.description }}</p>
     </div>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Publier</button>
-        <a href="{% url 'home' %}">Annuler</a>
-    </form>
+    <form class="answer-form" method="post">
+    {% csrf_token %}
+    
+    <div class="answer-field">
+        <div class="answer-headline">
+            {{ form.headline.label_tag }}
+            {{ form.headline }}
+        </div>
+        <div class="answer-rating">
+            {{ form.rating.label_tag }}
+            {{ form.rating }}
+        </div>
+    </div>
+
+    <div class="answer-body">
+        {{ form.body.label_tag }}
+        {{ form.body }}
+    </div>
+
+    <div class="answer-buttons">
+        <button class="answer-button" type="submit">Publier</button>
+        <a href="{% url 'home' %}" class="answer-button">Annuler</a>
+    </div>
+</form>
 
 {% endblock content %}

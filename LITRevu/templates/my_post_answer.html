@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2 class="my-post-title">Mes publications</h2>
+
+    <nav class="my-post-nav">
+        <a href="{% url 'my_post_ticket' %}" class="post-nav">Billets</a>
+        <a href="{% url 'my_post_review' %}" class="post-nav">Avis</a>
+        <a href="{% url 'my_post_answer' %}" class="post-nav">Réponses</a>
+    </nav>
+
+    {% for review in reviews %}
+        <div class="review-card">
+            <h3>{{ review.ticket.title }} - {{ review.ticket.author }}</h3>
+            <h4>{{ review.headline }}</h4>
+            <p>Note : {{ review.rating }}/5</p>
+            <p>{{ review.body }}</p>
+            <p>Par : {{ review.user.username }}</p>
+            <p>{{ review.time_created }}</p>
+        </div>
+    {% empty %}
+        <p>Aucune réponse pour le moment !</p>
+    {% endfor %}
+
+{% endblock content %}

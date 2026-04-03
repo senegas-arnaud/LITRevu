@@ -15,20 +15,12 @@
         <a href="{% url 'home' %}" class="navbar-brand">LITRevu</a>
         <div class="navbar-links">
             <a href="{% url 'home' %}" class="nav-link">
-                <img src="{% static 'images/Home.png' %}" alt="Home" class="nav-icon">
+                <img src="{% static 'images/Home2.png' %}" alt="Home" class="nav-icon">
                 <span class="nav-name">Flux</span>
-            </a>
-            <a href="{% url 'ticket_create' %}" class="nav-link">
-                <img src="{% static 'images/Ticket.png' %}" alt="Créer un billet" class="nav-icon">
-                <span class="nav-name">Créer un billet</span>
-            </a>
-            <a href="{% url 'review_create' %}" class="nav-link">
-                <img src="{% static 'images/Review.png' %}" alt="Créer une critique" class="nav-icon">
-                <span class="nav-name">Créer un avis</span>
             </a>
             <a href="{% url 'my_post_ticket' %}" class="nav-link">
                 <img src="{% static 'images/My_post.png' %}" alt="Mes posts" class="nav-icon">
-                <span class="nav-name">Mes posts</span>
+                <span class="nav-name">Publications</span>
             </a>
             <a href="{% url 'follow' %}" class="nav-link">
                 <img src="{% static 'images/Follow.png' %}" alt="Abonnements" class="nav-icon">
@@ -42,11 +34,6 @@
     </nav>
 
     <main class="main-content">
-        {% if messages %}
-            {% for message in messages %}
-                <p class="message">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
 
         {% block content %}
         {% endblock content %}

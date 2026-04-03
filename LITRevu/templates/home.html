@@ -4,6 +4,11 @@
 
     <h2 class ="home-title" >Mon flux</h2>
 
+    <nav class="my-home-nav">
+        <a href="{% url 'ticket_create' %}" class="home_nav">Créer un billet</a>
+        <a href="{% url 'review_create' %}" class="home_nav">Créer un avis</a>
+    </nav>
+
     {% for ticket in tickets %}
         <div class="home-content">
             <div class ="info">
@@ -17,6 +22,9 @@
                 {% endif %}
                 <p class ="home-description">{{ ticket.description }}</p>
                 <p class ="home-username">{{ ticket.user.username }} - {{ ticket.time_created }}</p>
+                {% if ticket.pk in reviewed_tickets %}
+                    <p class="already-reviewed">Vous avez déjà donner votre avis sur ce billet</p>
+                {% endif %}
             </div>
             <div class="ticket-img">
                 {% if ticket.image %}
@@ -24,9 +32,15 @@
                 {% endif %}
             </div>
             <div class="review-button">
-                <button class="answer-review">
+                {% if ticket.pk in reviewed_tickets %}
+                <button class="answer-review disabled" disabled>
                     <a class ="links-review" href="{% url 'review_answer' ticket.pk %}">Donner un avis</a>
                 </button>
+                {% else %}
+                    <button class="answer-review">
+                        <a class="links-review" href="{% url 'review_answer' ticket.pk %}">Donner un avis</a>
+                    </button>
+                {% endif %}
                 <button class="view-review toggle-reviews" data-ticket-id="{{ ticket.pk }}">
                     Voir les avis
                 </button>
@@ -43,7 +57,7 @@
                 <p class ="review-username">{{ review.user.username }} - {{ review.time_created }}</p>
             </div>
         {% empty %}
-            <p>Aucune critique pour le moment !</p>
+            <p class="no-review">Aucune critique pour le moment !</p>
         {% endfor %}
     </div>
     {% empty %}

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="delete">
+        <h2>Supprimer le billet</h2>
+        <p>Voulez-vous vraiment supprimer "{{ ticket.title }}" de {{ticket.author}} ?</p>
 
-    <h2>Supprimer le billet</h2>
-    <p>Voulez-vous vraiment supprimer "{{ ticket.title }}" ?</p>
-
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirmer la suppression</button>
-        <a href="{% url 'my_post_ticket' %}">Annuler</a>
-    </form>
+        <form class="delete-form" method="post">
+            {% csrf_token %}
+            <button class="delete-button" type="submit">Confirmer la suppression</button>
+            <a class="delete-return" href="{% url 'my_post_ticket' %}">Annuler</a>
+        </form>
+    </div>
 
 {% endblock content %}
